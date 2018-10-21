@@ -109,11 +109,12 @@ class UCR_UEA_datasets(object):
         try:
             url_baseline = "http://www.timeseriesclassification.com/singleTrainTest.csv"
             self._baseline_scores_filename = os.path.join(self._data_dir, os.path.basename(url_baseline))
-            urlretrieve(url_baseline, self._baseline_scores_filename)
+            if not os.path.exists(self._baseline_scores_filename):
+                urlretrieve(url_baseline, self._baseline_scores_filename)
 
-            # fix typos in that CSV to match with the name in the download link
-            in_file_string_replace(self._baseline_scores_filename, "CinCECGtorso", "CinCECGTorso")
-            in_file_string_replace(self._baseline_scores_filename, "StarlightCurves", "StarLightCurves")
+                # fix typos in that CSV to match with the name in the download link
+                in_file_string_replace(self._baseline_scores_filename, "CinCECGtorso", "CinCECGTorso")
+                in_file_string_replace(self._baseline_scores_filename, "StarlightCurves", "StarLightCurves")
         except:
             self._baseline_scores_filename = None
 
